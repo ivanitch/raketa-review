@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Raketa\BackendTestTask\Controller;
 
@@ -12,17 +12,23 @@ use Raketa\BackendTestTask\View\CartView;
 readonly class GetCartController
 {
     public function __construct(
-        public CartView $cartView,
+        public CartView    $cartView,
         public CartManager $cartManager
-    ) {
+    )
+    {
     }
 
+    /**
+     * @param RequestInterface $request
+     *
+     * @return ResponseInterface
+     */
     public function get(RequestInterface $request): ResponseInterface
     {
         $response = new JsonResponse();
-        $cart = $this->cartManager->getCart();
+        $cart     = $this->cartManager->getCart();
 
-        if (! $cart) {
+        if (!$cart) {
             $response->getBody()->write(
                 json_encode(
                     ['message' => 'Cart not found'],

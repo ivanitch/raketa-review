@@ -2,6 +2,7 @@
 
 namespace Raketa\BackendTestTask\Controller;
 
+use Doctrine\DBAL\Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Raketa\BackendTestTask\Domain\CartItem;
@@ -14,15 +15,23 @@ readonly class AddToCartController
 {
     public function __construct(
         private ProductRepository $productRepository,
-        private CartView $cartView,
-        private CartManager $cartManager,
-    ) {
+        private CartView          $cartView,
+        private CartManager       $cartManager,
+    )
+    {
     }
 
+    /**
+     * @param RequestInterface $request
+     *
+     * @return ResponseInterface
+     *
+     * @throws Exception
+     */
     public function get(RequestInterface $request): ResponseInterface
     {
         $rawRequest = json_decode($request->getBody()->getContents(), true);
-        $product = $this->productRepository->getByUuid($rawRequest['productUuid']);
+        $product    = $this->productRepository->getByUuid($rawRequest['productUuid']);
 
         $cart = $this->cartManager->getCart();
         $cart->addItem(new CartItem(
@@ -37,7 +46,7 @@ readonly class AddToCartController
             json_encode(
                 [
                     'status' => 'success',
-                    'cart' => $this->cartView->toArray($cart)
+                    'cart'   => $this->cartView->toArray($cart)
                 ],
                 JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
             )

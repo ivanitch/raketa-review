@@ -32,7 +32,7 @@ class Connector
     /**
      * @throws ConnectorException
      */
-    public function set(string $key, Cart $value)
+    public function set(string $key, Cart $value): void
     {
         try {
             $this->redis->setex($key, 24 * 60 * 60, serialize($value));
@@ -41,6 +41,11 @@ class Connector
         }
     }
 
+    /**
+     * @param $key
+     * @return bool
+     * @throws RedisException
+     */
     public function has($key): bool
     {
         return $this->redis->exists($key);

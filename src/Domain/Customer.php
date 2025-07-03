@@ -1,18 +1,28 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Raketa\BackendTestTask\Domain;
 
 final readonly class Customer
 {
+    /**
+     * Поменял местами $lastName и $middleName
+     *
+     * @param int $id
+     * @param string $firstName
+     * @param string $middleName
+     * @param string $lastName
+     * @param string $email
+     */
     public function __construct(
-        private int $id,
+        private int    $id,
         private string $firstName,
-        private string $lastName,
         private string $middleName,
+        private string $lastName,
         private string $email,
-    ) {
+    )
+    {
     }
 
     public function getId(): int
