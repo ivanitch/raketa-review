@@ -2,3 +2,4 @@
 /.docker/log/
 /.docker/mysql/data/
 /.docker/redis-data/
+/vendor/
